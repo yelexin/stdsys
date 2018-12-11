@@ -112,11 +112,28 @@
                         width: 200,
                         align: 'center',
                         render: (h, params) => {
-                            return h('div', [
+                            if(this.power ==3) {
+                                return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'success',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.show(params.index);
+                                        }
+                                    }
+                                }, '查看成绩')
+                            ]);
+                            } else {
+return h('div', [
                                 h('Button', {
                                     props: {
                                         type: 'primary',
-                                        size: 'small'
+                                        size: 'small',
+                                        'v-if': this.power === 2 || this.power === 1
+                                
                                     },
                                     style: {
                                         marginRight: '5px'
@@ -130,7 +147,8 @@
                                 h('Button', {
                                     props: {
                                         type: 'error',
-                                        size: 'small'
+                                        size: 'small',
+                                        'v-if': this.power === 2 || this.power === 1
                                     },
                                     style: {
                                         marginRight: '5px'
@@ -153,6 +171,8 @@
                                     }
                                 }, '查看成绩')
                             ]);
+                            }
+                            
                         }
                     }
                 ],
@@ -170,6 +190,7 @@
         },
         mounted() {
         	this.getStudentList();
+            this.power = localStorage.user_power;
         },
         methods: {
             handleUpload(file) {
